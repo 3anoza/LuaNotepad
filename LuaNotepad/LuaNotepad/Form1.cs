@@ -16,7 +16,6 @@ namespace LuaNotepad
             _cmdRunInterp.StartInfo.Arguments = "/k java -cp luaj-jse-3.0.1.jar lua main.lua";
             _cmdRunInterp.StartInfo.FileName = "cmd.exe";
             richTextBox1.ReadOnly = true;
-            Code.SelectionTabs = new int[] { 0, 4, Code.MaxLength};
         }
 
         private void Code_TextChanged(object sender, EventArgs e)
@@ -24,7 +23,14 @@ namespace LuaNotepad
             int i = Code.Lines.Length;
             foreach (var line in Code.Lines)
             {
-                Syntax.AddRange(GetWordsFromText(line));
+                var list = GetWordsFromText(line);
+                foreach (var word in list)
+                {
+                    if (!Syntax.Contains(word))
+                    {
+                        Syntax.Add(word);
+                    }
+                }
             }
             if (i > 1)
             {
@@ -35,7 +41,8 @@ namespace LuaNotepad
                         richTextBox1.Text += t.ToString() + " \n";
                 }
             }
-
+            listBox1.Items.Clear();
+            listBox1.Items.AddRange(Syntax.ToArray());
             //Code.Text += pos;
             /*foreach (var word in _syntax)
             {
@@ -67,6 +74,11 @@ namespace LuaNotepad
         private void Compile_Click(object sender, EventArgs e)
         {
             _cmdRunInterp.Start();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Syntax.Clear();
         }
     }
 }
