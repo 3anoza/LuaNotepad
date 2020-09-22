@@ -17,9 +17,12 @@ bld/
 # Visual Studio cache/options directory
 .vs/
 
+<<<<<<< HEAD
 # Rider cache/options directory
 .idea/
 
+=======
+>>>>>>> 1f674d06be3c87959b23fe9cadc2337add8af1de
 # User-specific files
 *.rsuser
 *.suo
